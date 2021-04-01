@@ -1,6 +1,7 @@
 require "bundler/setup"
 require "commiter/version"
 require 'json'
+require '../lib/commiter_rules_generator'
 
 module CommiterGenerator
 
@@ -23,11 +24,8 @@ module CommiterGenerator
     # Generate Shell File To Execute Commit Message Validation
     def self.generate_sh_file(save_path)
       begin
-        File.open(save_path,"w") do |f|
-          f.write("#!/bin/sh")
-          f.write("exec < /dev/tty")
-          f.write("./.git/hooks/commiter_validation.rb $1")
-        end
+        # Start Generating Git Rules File
+        CommiterRules::CommiterRulesStarter::start(save_path)
       rescue => error
         puts "Something Error : #{error.message}"
         puts error.backtrace
@@ -92,11 +90,9 @@ module CommiterGenerator
       black_list_words = []
       regex_input = ""
       ticket_number_example = ""
-      is_enabled = "y"
-      max_length = "50"
+
       save_path = ".git/hooks/commiterConfig.json"
-      shell_script_save_path = ".git/hooks/commit-msg.sh"
-      is_global_configuration_enabled = "y"
+      shell_script_save_path = ".git/hooks/pre-commit"
 
       # 1. First Question Choose Your Commits Type
       puts "Please Choose Your Type of Commit Checking From This Types"
