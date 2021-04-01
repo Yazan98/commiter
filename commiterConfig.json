@@ -1,0 +1,14 @@
+{
+  "black_list_words": [
+    "Fix",
+    "Version",
+    "Change",
+    "Search",
+    "Update",
+    "Version"
+  ],
+  "regex_input": "",
+  "ticket_number_example": "",
+  "is_enabled": "y",
+  "generated_style": "b"
+}

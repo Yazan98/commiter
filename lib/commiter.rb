@@ -11,6 +11,7 @@ module Commiter
       puts "Command [-g] Generate Git Rules Based On Questions"
       puts "Command [-c] Generate Config File Without Change Git Rules"
       puts "Command [-d] Show Debug Messages While Generating Git Config"
+      puts "Command [-r] Restore Git Rules Based On Config File"
       if should_exit
         exit
       end
@@ -84,7 +85,6 @@ module Commiter
           end
           CommiterGenerator::CommiterCliGenerator::start
         end
-
       end
 
     end
