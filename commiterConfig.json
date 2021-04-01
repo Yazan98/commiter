@@ -1,11 +1,22 @@
 {
   "black_list_words": [
-    "Fix",
-    "Version",
-    "Change",
-    "Search",
-    "Update",
-    "Version"
+    "Fdslfksdf",
+    "sdf",
+    "sdfsdf",
+    "sd",
+    "f",
+    "sdf",
+    "s",
+    "df",
+    "sd",
+    "fs",
+    "df",
+    "sd",
+    "f",
+    "sdf",
+    "sd",
+    "f",
+    "sdf"
   ],
   "regex_input": "",
   "ticket_number_example": "",

@@ -21,21 +21,41 @@ module CommiterGenerator
     end
 
     def self.generate_json_file(black_list_words, regex_input, ticket_number_example, is_enabled, generated_style)
+      is_commits_enabled = false
+      if is_enabled == "y"
+        is_commits_enabled = true
+      end
       tempHash = {
         "black_list_words" => black_list_words.to_s.split(","),
         "regex_input" => regex_input,
         "ticket_number_example" => ticket_number_example,
-        "is_enabled" => is_enabled,
+        "is_enabled" => is_commits_enabled,
         "generated_style" => generated_style
       }
 
-      File.open("commiterConfig.json","w") do |f|
-        f.write(JSON.pretty_generate(tempHash))
+      # Save File For History
+      begin
+        File.open("commiterConfig.json","w") do |f|
+          f.write(JSON.pretty_generate(tempHash))
+        end
+      rescue => error
+        puts "Something Error : #{error.message}"
+        puts error.backtrace
+      end
+
+      begin
+        File.open(".git/hooks/commiterConfig.json","w") do |f|
+          f.write(JSON.pretty_generate(tempHash))
+        end
+      rescue => error
+        puts "Something Error : #{error.message}"
+        puts error.backtrace
       end
 
       puts ""
       puts "Commiter Wrote Json Config File [commiterConfig.json] To Your Project :D"
       puts "Any One Pull The Project He Can Start Commiter With [-q] Parameter and Will Generate Git Rules Based On This File"
+      puts "Any Update on The File You Should Execute Commiter -q Again To Apply The Changes"
       puts "Now Enjoy With Your Commit Messages :D"
       exit
     end
@@ -93,6 +113,7 @@ module CommiterGenerator
 
       # 6. Save Items In Config Json File
       generate_json_file(black_list_words, regex_input, ticket_number_example, is_enabled, generated_style)
+
     end
 
   end
