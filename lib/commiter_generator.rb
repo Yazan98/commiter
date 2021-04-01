@@ -20,17 +20,43 @@ module CommiterGenerator
       end
     end
 
-    def self.generate_json_file(black_list_words, regex_input, ticket_number_example, is_enabled, generated_style)
+    # Generate Shell File To Execute Commit Message Validation
+    def self.generate_sh_file(save_path)
+      begin
+        File.open(save_path,"w") do |f|
+          f.write("#!/bin/sh")
+          f.write("exec < /dev/tty")
+          f.write("./.git/hooks/commiter_validation.rb $1")
+        end
+      rescue => error
+        puts "Something Error : #{error.message}"
+        puts error.backtrace
+      end
+    end
+
+    def self.generate_json_file(
+      save_path,
+      black_list_words,
+      regex_input,
+      ticket_number_example,
+      is_enabled,
+      generated_style,
+      max_length,
+      is_global_configuration_enabled
+    )
       is_commits_enabled = false
       if is_enabled == "y"
         is_commits_enabled = true
       end
+
       tempHash = {
         "black_list_words" => black_list_words.to_s.split(","),
         "regex_input" => regex_input,
         "ticket_number_example" => ticket_number_example,
         "is_enabled" => is_commits_enabled,
-        "generated_style" => generated_style
+        "generated_style" => generated_style,
+        "max_length" => max_length,
+        "is_global_configuration_enabled" => is_global_configuration_enabled
       }
 
       # Save File For History
@@ -44,7 +70,7 @@ module CommiterGenerator
       end
 
       begin
-        File.open(".git/hooks/commiterConfig.json","w") do |f|
+        File.open(save_path,"w") do |f|
           f.write(JSON.pretty_generate(tempHash))
         end
       rescue => error
@@ -67,6 +93,10 @@ module CommiterGenerator
       regex_input = ""
       ticket_number_example = ""
       is_enabled = "y"
+      max_length = "50"
+      save_path = ".git/hooks/commiterConfig.json"
+      shell_script_save_path = ".git/hooks/commit-msg.sh"
+      is_global_configuration_enabled = "y"
 
       # 1. First Question Choose Your Commits Type
       puts "Please Choose Your Type of Commit Checking From This Types"
@@ -111,8 +141,42 @@ module CommiterGenerator
       puts "Your Options Saved Will Add Them To Config File And You Can Change Them Anytime From Config File"
       puts "Saved Option : #{is_enabled}"
 
+      # 6. Max Length of Message Line
+      puts "What is the Maximum Length of Commit Message Default [50]"
+      print "Your Answer ? "
+      max_length = STDIN.gets.chomp
+      puts "Your Options Saved Will Add Them To Config File And You Can Change Them Anytime From Config File"
+      puts "Saved Option : #{max_length}"
+
+      # 7. Save Template In Git
+      puts "Do You want To Copy This Files to Git Template Root as a Global Configuration [y,n] Default is [y]"
+      print "Your Answer ? "
+      is_global_configuration_enabled = STDIN.gets.chomp
+      puts "Your Options Saved Will Add Them To Config File And You Can Change Them Anytime From Config File"
+      puts "Saved Option : #{is_global_configuration_enabled}"
+
+      begin
+        max_length = max_length.to_i
+      rescue => error
+        puts "Something Error : #{error}"
+      end
+
       # 6. Save Items In Config Json File
-      generate_json_file(black_list_words, regex_input, ticket_number_example, is_enabled, generated_style)
+      generate_json_file(save_path, black_list_words, regex_input, ticket_number_example, is_enabled, generated_style, max_length, is_global_configuration_enabled)
+      generate_sh_file(shell_script_save_path)
+
+      if is_global_configuration_enabled == "y"
+        sh("cd ..")
+
+        begin
+          sh("mkdir ~/.git_template")
+        rescue => error
+          puts "Something Wrong With Error : #{error.message}"
+        end
+
+        sh("git config --global init.templatedir '~/.git_template'")
+        # Copy Generated Files to Your Root Template Location
+      end
 
     end
 
