@@ -1,6 +1,6 @@
 require "bundler/setup"
-require "commiter/version"
-require 'commiter_generator'
+require_relative "../lib/commiter/version"
+require_relative 'commiter_generator'
 
 module Commiter
 

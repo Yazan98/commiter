@@ -1,0 +1,75 @@
+#!/usr/bin/env ruby
+
+require 'json'
+
+target_message_line = 0
+target_text_message = ""
+current_directory = __dir__
+data_hash = ""
+check_type = ""
+
+# --------------------- Step Read Commiter Configuration ----------------- #
+text = File.open(ARGV[0]).read
+     text.gsub!(/\r\n?/, "\n")
+     text.each_line do |line|
+     target_text_message = line
+end
+
+file = File.open current_directory + "/commiterConfig.json"
+    data = JSON.load file
+file.close
+
+json_from_file = File.read(current_directory + "/commiterConfig.json")
+hash = JSON.parse(json_from_file)
+check_type = hash["generated_style"]
+# --------------------- End Step Read Commiter Configuration ----------------- #
+
+
+# --------------------- Step Check Commiter Configuration Enabled ----------------- #
+if hash["is_enabled"]
+  # Hooks Enabled Start Validation
+  # Will Continue To Check Based on Json Config
+else
+  # Hooks Disabled Continue
+  exit 0
+end
+# --------------------- End Step Check Commiter Configuration Enabled ----------------- #
+
+# --------------------- Step Check if Ticket Number Exists ----------------- #
+if check_type == "t"
+   validation_message = hash["ticket_number_example"]
+   validation_message["{#}"] = ""
+   if target_text_message.include? validation_message
+    puts "Ticket Number Key Found, Good Commit Based on Configured Rules"
+    exit 0
+  else
+    puts "Bad Commit Message (Ticket Number Not Found) Commit Rejected"
+    exit 1
+  end
+end
+# --------------------- End Step Check if Ticket Number Exists ----------------- #
+
+# --------------------- Step Check if Commit Message Equals Black List Array ----------------- #
+if check_type == "b"
+  black_list_words = hash["black_list_words"]
+  filtered_message = target_text_message.downcase.strip
+  black_list_words.each { |value|
+    if filtered_message == value.downcase.strip
+      puts "Bad Commit Message (#{value} Message Not Acceptable) Commit Rejected"
+      exit 1
+    end
+  }
+end
+# --------------------- End Step Check if Commit Message Equals Black List Array ----------------- #
+
+# --------------------- Step Check Commit Message Equals Regex ----------------- #
+if check_type == "r"
+  if target_text_message.match(hash["regex_input"])
+    # Input Regex Matched
+    exit 0
+  else
+    puts "Bad Commit Message (Message Not Match Regex) Commit Rejected"
+    exit 1
+  end
+end
+# --------------------- End Step Check Commit Message Equals Regex ----------------- #

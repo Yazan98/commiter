@@ -1,7 +1,7 @@
 require "bundler/setup"
-require "commiter/version"
+require_relative "commiter/version"
 require 'json'
-require '../lib/commiter_rules_generator'
+require_relative '../lib/commiter_rules_generator'
 
 module CommiterGenerator
 
@@ -92,7 +92,7 @@ module CommiterGenerator
       ticket_number_example = ""
 
       save_path = ".git/hooks/commiterConfig.json"
-      shell_script_save_path = ".git/hooks/pre-commit"
+      shell_script_save_path = ".git/hooks/commit-msg"
 
       # 1. First Question Choose Your Commits Type
       puts "Please Choose Your Type of Commit Checking From This Types"
