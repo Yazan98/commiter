@@ -58,6 +58,8 @@ bundle package
 # Quick Installation
 If you dont wanna use gem file you can copy the files and Edit the Config json File from result folder into you .git/hooks folder inside your git repository you will find variables described in table section
 
+In this Step you dont need to Edit Your Project Source Code you just copy the Files to git Configuration
+
 | Key Name      | Description |
 | ----------- | ----------- |
 | is_enabled      | Decide if commit command will check the validation or not       |
@@ -77,3 +79,7 @@ The Cli should be started
 
 ![Capture](https://user-images.githubusercontent.com/29167110/113469182-53431100-9454-11eb-863a-3d14b0eb45dd.PNG)
 
+# Todo List
+1. Support Restore Point In Cli To Generate Git Hooks from Config Json File
+2. Support 2 Types in the same time in Validations like Regex and Black list
+3. Run Command Before push commit like Code Analytics Then Execute Commit Message Validation
