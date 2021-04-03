@@ -11,18 +11,22 @@ In each git Repository when you initialize the Project you dont have Rules to ma
 
 # Screenshots for Validation
 1. Ticket Number Validation
+
 The Use case Here is when i work on Large Project i Use This Technique to Connect Everything with a Ticket Number so i can return whenever i want inside History and know exactly this change for any ticket
 ![Capture](https://user-images.githubusercontent.com/29167110/113469102-8df87980-9453-11eb-9727-2240e6914c59.PNG)
 
 2. Black list Validation
+
 The Use case Here is when i work on a repo sometimes i write Dummy Messages and this will remind me if i wrote same message again :D
 ![Capture](https://user-images.githubusercontent.com/29167110/113469122-bda78180-9453-11eb-9360-710185340f55.PNG)
 
 3. Regex Expression Validation
+
 The Use case Here is a Customized way to Put any Pattern you want if it not already Supported
 ![Capture](https://user-images.githubusercontent.com/29167110/113469144-f6475b00-9453-11eb-8952-c30d34784c56.PNG)
 
 4. Subject and Content Validation
+
 The Use Case Here some Project dont have Task Management Project so There is no Ticket Number Here So this Technique Will be Good when you Write Subject : Content Meaningful Message
 ![subject_validation](https://user-images.githubusercontent.com/29167110/113487370-64296c00-94c0-11eb-8cb2-44662c1b3558.PNG)
 
