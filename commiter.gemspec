@@ -19,9 +19,13 @@ Gem::Specification.new do |spec|
   spec.files         = Dir["lib/**/*"] + %w(README.md LICENSE)
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
+  spec.bindir        = "exe"
+  spec.executables   = spec.files.grep(%r{^rxr/}) { |f| File.basename(f) }
 
   spec.add_development_dependency('bundler')
   spec.add_development_dependency('rspec')
   spec.add_development_dependency('rspec_junit_formatter')
   spec.add_development_dependency('rake')
+  spec.add_development_dependency('simplecov')
+
 end

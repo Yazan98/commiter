@@ -1,0 +1,12 @@
+{
+  "black_list_words": [
+    "Update",
+    "push",
+    "fix"
+  ],
+  "regex_input": "\\d",
+  "ticket_number_example": "AN-{#}",
+  "is_enabled": true,
+  "generated_style": "r",
+  "is_global_configuration_enabled": "n"
+}

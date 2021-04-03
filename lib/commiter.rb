@@ -89,6 +89,11 @@ module Commiter
 
     end
 
-    start_cli
+    begin
+      start_cli
+    rescue => error
+      puts "Error :: #{error.message}"
+      puts error.backtrace
+    end
   end
 end
