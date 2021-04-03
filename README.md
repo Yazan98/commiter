@@ -39,10 +39,10 @@ In each git Repository when you initialize the Project you dont have Rules to ma
 source 'https://rubygems.org'
 ```
 
-3. Add this Line inside This File
+3. Add this Line inside This File [RubyGem Link](https://rubygems.org/gems/commiter)
 
 ```ruby19regexp
-gem 'commiter', '~> 0.0.1'
+gem 'commiter', '~> 1.0.0'
 ```
 
 4. Run this Commands
