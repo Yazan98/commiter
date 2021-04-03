@@ -10,20 +10,19 @@ check_type = ""
 
 # --------------------- Step Read Commiter Configuration ----------------- #
 text = File.open(ARGV[0]).read
-     text.gsub!(/\r\n?/, "\n")
-     text.each_line do |line|
-     target_text_message = line
+text.gsub!(/\r\n?/, "\n")
+text.each_line do |line|
+  target_text_message = line
 end
 
 file = File.open current_directory + "/commiterConfig.json"
-    data = JSON.load file
+data = JSON.load file
 file.close
 
 json_from_file = File.read(current_directory + "/commiterConfig.json")
 hash = JSON.parse(json_from_file)
 check_type = hash["generated_style"]
 # --------------------- End Step Read Commiter Configuration ----------------- #
-
 
 # --------------------- Step Check Commiter Configuration Enabled ----------------- #
 if hash["is_enabled"]
@@ -37,9 +36,9 @@ end
 
 # --------------------- Step Check if Ticket Number Exists ----------------- #
 if check_type == "t"
-   validation_message = hash["ticket_number_example"]
-   validation_message["{#}"] = ""
-   if target_text_message.include? validation_message
+  validation_message = hash["ticket_number_example"]
+  validation_message["{#}"] = ""
+  if target_text_message.include? validation_message
     puts "Ticket Number Key Found, Good Commit Based on Configured Rules"
     exit 0
   else
@@ -73,3 +72,26 @@ if check_type == "r"
   end
 end
 # --------------------- End Step Check Commit Message Equals Regex ----------------- #
+
+# --------------------- Step Check Commit Message Subject and Content ----------------- #
+if check_type == "s"
+  filtered_message_array = target_text_message.split(":")
+  if target_text_message.include? ":"
+    # String Split Key Found
+  else
+    puts "Bad Commit Message (Subject Not Found) Commit Rejected : Example (Subject : Content)"
+    exit 1
+  end
+
+  if filtered_message_array[0].nil? || filtered_message_array[0].strip.empty?
+    # Subject Not Found
+    puts "Bad Commit Message (Subject Not Found) Commit Rejected : Example (Subject : Content)"
+    exit 1
+  elsif filtered_message_array[1].nil? || filtered_message_array[1].strip.empty?
+    puts "Bad Commit Message (Content Not Found) Commit Rejected : Example (Subject : Content)"
+    exit 1
+  else
+    exit 0
+  end
+end
+# --------------------- End Step Check Commit Message Subject and Content ----------------- #

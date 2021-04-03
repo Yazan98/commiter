@@ -99,6 +99,7 @@ module CommiterGenerator
       puts " Option : Write [t] To Check If Commit Has Ticket Number First or Not In Commit Messages"
       puts " Option : Write [b] To Check If Commit Has Word From Black List Words That Blocked From Messages Like Dummy Messages"
       puts " Option : Write [r] To Check Commit Messages Based on Regex String"
+      puts " Option : Write [s] To Check Commit Messages Based on Subject and Description"
       print "Your Answer ? "
       generated_style = STDIN.gets.chomp
       validate_command_options(generated_style)
