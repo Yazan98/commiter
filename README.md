@@ -3,6 +3,9 @@
 # Description
 Commiter is a Cli Written in Ruby To Ask some Questions about how you want to write the commit message validation before write any commit and if this commit is not matching the commiter configuration file it will reject the commit and kill the process
 
+### Project Development
+This Project Designed Like this to Match any Project or language i will work on for this reason it has External files should be inside Hooks Manually to match any type of Projects and it's not connected to a specific language configuration
+
 # The Problem
 In each git Repository when you initialize the Project you dont have Rules to make All Developers inside this Project Follow same way in Commit Messages and in the Future if you cant find any key inside the messages to see the history you will never know how this feature implemented like this until you deep dive into it because you dont have the main reason about this area you just found the commit message (fix) and this is not a commit message :D so with this configuration all the team will have same commit rules and if someone is not following this rules the commit will be rejected
 
