@@ -82,4 +82,4 @@ The Cli should be started
 # Todo List
 1. Support Restore Point In Cli To Generate Git Hooks from Config Json File
 2. Support 2 Types in the same time in Validations like Regex and Black list
-3. Run Command Before push commit like Code Analytics Then Execute Commit Message Validation
+3. Run Command Before push commit like Code Analysis Then Execute Commit Message Validation
